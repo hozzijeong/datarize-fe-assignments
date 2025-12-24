@@ -2,9 +2,13 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import type { PurchaseFrequency, PurchaseFrequencyParams } from '../types'
 
 function buildUrl(params?: PurchaseFrequencyParams): string {
-  if (!params) return '/api/purchase-frequency'
+  if (!params?.from || !params?.to) return '/api/purchase-frequency'
 
-  return `/api/purchase-frequency?from=${params.from}&to=${params.to}`
+  const searchParams = new URLSearchParams()
+  searchParams.set('from', params.from)
+  searchParams.set('to', params.to)
+
+  return `/api/purchase-frequency?${searchParams.toString()}`
 }
 
 async function fetchPurchaseFrequency(params?: PurchaseFrequencyParams): Promise<PurchaseFrequency[]> {
