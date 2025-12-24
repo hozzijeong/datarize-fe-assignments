@@ -9,3 +9,5 @@ export interface CustomerParams {
   sortBy?: 'asc' | 'desc'
   name?: string
 }
+
+export type Order = CustomerParams['sortBy']

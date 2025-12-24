@@ -3,12 +3,14 @@ import { PurchaseFrequencyChart } from '@/domains/purchase/components/PurchaseFr
 import { useFetchCustomers } from '@/domains/customers/queries/useFetchCustomers'
 import { CustomerList } from '@/domains/customers/components/CustomerList'
 import { useDebounce } from '@/hooks/useDebounce'
-import { Suspense, useState } from 'react'
+import { Suspense, useCallback, useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
+
+import { Order } from '@/domains/customers/types'
 
 export function DashBoardPage() {
   return (
-    <main className="mx-auto max-w-screen-xl px-4 py-8">
+    <main className="mx-auto max-w-7xl px-4 py-8">
       <PurchaseFrequencySection />
       <CustomerSection />
     </main>
@@ -20,7 +22,7 @@ function PurchaseFrequencySection() {
     <section className="mb-12">
       <h1 className="mb-6 text-2xl font-bold">가격대별 구매 빈도</h1>
       <ErrorBoundary fallback={<div>차트를 불러오는 중 오류가 발생했습니다.</div>}>
-        <Suspense fallback={<div className="flex h-[400px] items-center justify-center">로딩 중...</div>}>
+        <Suspense fallback={<div className="flex h-100 items-center justify-center">로딩 중...</div>}>
           <PurchaseFrequencyChartBox />
         </Suspense>
       </ErrorBoundary>
@@ -60,7 +62,15 @@ function CustomerSection() {
 }
 
 function CustomerListBox({ searchName }: { searchName: string }) {
-  const { data } = useFetchCustomers(searchName ? { name: searchName } : undefined)
+  const [order, setOrder] = useState<Order>()
 
-  return <CustomerList data={data} />
+  const handleChangeOrder = useCallback(() => {
+    setOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))
+  }, [])
+
+  const { data } = useFetchCustomers({ name: searchName, sortBy: order })
+
+  return (
+    <CustomerList key={`list-${searchName}-${order}`} data={data} order={order} handleChangeOrder={handleChangeOrder} />
+  )
 }

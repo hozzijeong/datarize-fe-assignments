@@ -1,13 +1,16 @@
 import { useState } from 'react'
-import type { Customer } from '../types'
+import type { Customer, Order } from '../types'
+import { OrderDirectionItem } from './OrderDirectionItem'
 
 const ITEMS_PER_PAGE = 10
 
 interface CustomerListProps {
   data: Customer[]
+  order?: Order
+  handleChangeOrder: () => void
 }
 
-export function CustomerList({ data }: CustomerListProps) {
+export function CustomerList({ data, order, handleChangeOrder }: CustomerListProps) {
   const [currentPage, setCurrentPage] = useState(1)
 
   const totalPages = Math.ceil(data.length / ITEMS_PER_PAGE)
@@ -27,12 +30,17 @@ export function CustomerList({ data }: CustomerListProps) {
               <th className="px-4 py-3 text-left text-sm font-semibold">ID</th>
               <th className="px-4 py-3 text-left text-sm font-semibold">이름</th>
               <th className="px-4 py-3 text-right text-sm font-semibold">구매 횟수</th>
-              <th className="px-4 py-3 text-right text-sm font-semibold">총 구매 금액</th>
+              <th className="px-4 py-3 text-sm font-semibold" align="right">
+                <button className="flex items-center justify-center gap-2" onClick={handleChangeOrder}>
+                  구매 금액
+                  <OrderDirectionItem order={order} />
+                </button>
+              </th>
             </tr>
           </thead>
           <tbody>
             {paginatedData.map((customer) => (
-              <tr key={customer.id} className="border-b hover:bg-gray-50">
+              <tr key={customer.id} className="cursor-pointer border-b hover:bg-gray-50 active:bg-gray-200">
                 <td className="px-4 py-3 text-sm">{customer.id}</td>
                 <td className="px-4 py-3 text-sm">{customer.name}</td>
                 <td className="px-4 py-3 text-right text-sm">{customer.count}회</td>
