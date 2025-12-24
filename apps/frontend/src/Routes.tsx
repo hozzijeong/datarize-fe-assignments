@@ -1,5 +1,6 @@
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import { DashBoardPage } from './pages/Dashboard'
+import { OrdersDetail } from './pages/OrdersDetail'
 
 const router = createBrowserRouter([
   {
@@ -8,7 +9,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/orders/:id',
-    element: <DashBoardPage />,
+    element: <OrdersDetail />,
   },
   {
     path: '*',
