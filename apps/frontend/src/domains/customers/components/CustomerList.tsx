@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import type { Customer, Order } from '../types'
 import { OrderDirectionItem } from './OrderDirectionItem'
 
@@ -40,11 +41,27 @@ export function CustomerList({ data, order, handleChangeOrder }: CustomerListPro
           </thead>
           <tbody>
             {paginatedData.map((customer) => (
-              <tr key={customer.id} className="cursor-pointer border-b hover:bg-gray-50 active:bg-gray-200">
-                <td className="px-4 py-3 text-sm">{customer.id}</td>
-                <td className="px-4 py-3 text-sm">{customer.name}</td>
-                <td className="px-4 py-3 text-right text-sm">{customer.count}회</td>
-                <td className="px-4 py-3 text-right text-sm">{customer.totalAmount.toLocaleString()}원</td>
+              <tr key={customer.id} className="border-b hover:bg-gray-50 active:bg-gray-200">
+                <td className="text-sm">
+                  <Link to={`/orders/${customer.id}`} className="block px-4 py-3">
+                    {customer.id}
+                  </Link>
+                </td>
+                <td className="text-sm">
+                  <Link to={`/orders/${customer.id}`} className="block px-4 py-3" tabIndex={-1}>
+                    {customer.name}
+                  </Link>
+                </td>
+                <td className="text-right text-sm">
+                  <Link to={`/orders/${customer.id}`} className="block px-4 py-3" tabIndex={-1}>
+                    {customer.count}회
+                  </Link>
+                </td>
+                <td className="text-right text-sm">
+                  <Link to={`/orders/${customer.id}`} className="block px-4 py-3" tabIndex={-1}>
+                    {customer.totalAmount.toLocaleString()}원
+                  </Link>
+                </td>
               </tr>
             ))}
           </tbody>
