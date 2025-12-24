@@ -1,5 +1,6 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { usePagination } from '@/hooks/usePagination'
+import { Pagination } from '@/components/Pagination'
 import type { Customer, Order } from '../types'
 import { OrderDirectionItem } from './OrderDirectionItem'
 
@@ -12,15 +13,10 @@ interface CustomerListProps {
 }
 
 export function CustomerList({ data, order, handleChangeOrder }: CustomerListProps) {
-  const [currentPage, setCurrentPage] = useState(1)
-
-  const totalPages = Math.ceil(data.length / ITEMS_PER_PAGE)
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
-  const paginatedData = data.slice(startIndex, startIndex + ITEMS_PER_PAGE)
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page)
-  }
+  const { currentPage, totalPages, startIndex, paginatedData, handlePageChange } = usePagination(
+    data,
+    ITEMS_PER_PAGE
+  )
 
   return (
     <div>
@@ -68,35 +64,7 @@ export function CustomerList({ data, order, handleChangeOrder }: CustomerListPro
         </table>
       </div>
 
-      {totalPages > 1 && (
-        <div className="mt-4 flex items-center justify-center gap-2">
-          <button
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-            className="rounded border px-3 py-1 text-sm disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            이전
-          </button>
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <button
-              key={page}
-              onClick={() => handlePageChange(page)}
-              className={`rounded border px-3 py-1 text-sm ${
-                currentPage === page ? 'bg-blue-500 text-white' : 'hover:bg-gray-100'
-              }`}
-            >
-              {page}
-            </button>
-          ))}
-          <button
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-            className="rounded border px-3 py-1 text-sm disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            다음
-          </button>
-        </div>
-      )}
+      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
 
       <div className="mt-2 text-center text-sm text-gray-500">
         총 {data.length}명 중 {startIndex + 1}-{Math.min(startIndex + ITEMS_PER_PAGE, data.length)}명 표시

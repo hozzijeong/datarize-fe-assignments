@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useMemo } from 'react'
+import { usePagination } from '@/hooks/usePagination'
+import { Pagination } from '@/components/Pagination'
 import type { Purchase } from '../types'
 
 const ITEMS_PER_PAGE = 5
@@ -28,16 +30,12 @@ function groupByDate(purchases: Purchase[]): GroupedPurchases[] {
 }
 
 export function OrderList({ data }: OrderListProps) {
-  const [currentPage, setCurrentPage] = useState(1)
+  const groupedData = useMemo(() => groupByDate(data), [data])
 
-  const groupedData = groupByDate(data)
-  const totalPages = Math.ceil(groupedData.length / ITEMS_PER_PAGE)
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
-  const paginatedData = groupedData.slice(startIndex, startIndex + ITEMS_PER_PAGE)
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page)
-  }
+  const { currentPage, totalPages, startIndex, paginatedData, handlePageChange } = usePagination(
+    groupedData,
+    ITEMS_PER_PAGE
+  )
 
   if (data.length === 0) {
     return <div className="py-8 text-center text-gray-500">주문 내역이 없습니다.</div>
@@ -50,14 +48,10 @@ export function OrderList({ data }: OrderListProps) {
           <div key={group.date} className="rounded-lg border bg-white p-4">
             <h3 className="mb-4 border-b pb-2 text-lg font-semibold">{group.date}</h3>
             <ul className="space-y-3">
-              {group.purchases.map((purchase, index) => (
-                <li key={index} className="flex items-center gap-4">
+              {group.purchases.map((purchase) => (
+                <li key={`${purchase.date}-${purchase.product}-${purchase.price}`} className="flex items-center gap-4">
                   {purchase.imgSrc && (
-                    <img
-                      src={purchase.imgSrc}
-                      alt={purchase.product}
-                      className="h-16 w-16 rounded object-cover"
-                    />
+                    <img src={purchase.imgSrc} alt={purchase.product} className="h-16 w-16 rounded object-cover" />
                   )}
                   <div className="flex-1">
                     <p className="font-medium">{purchase.product}</p>
@@ -71,35 +65,7 @@ export function OrderList({ data }: OrderListProps) {
         ))}
       </div>
 
-      {totalPages > 1 && (
-        <div className="mt-6 flex items-center justify-center gap-2">
-          <button
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-            className="rounded border px-3 py-1 text-sm disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            이전
-          </button>
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <button
-              key={page}
-              onClick={() => handlePageChange(page)}
-              className={`rounded border px-3 py-1 text-sm ${
-                currentPage === page ? 'bg-blue-500 text-white' : 'hover:bg-gray-100'
-              }`}
-            >
-              {page}
-            </button>
-          ))}
-          <button
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-            className="rounded border px-3 py-1 text-sm disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            다음
-          </button>
-        </div>
-      )}
+      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
 
       <div className="mt-2 text-center text-sm text-gray-500">
         총 {groupedData.length}개 날짜 중 {startIndex + 1}-{Math.min(startIndex + ITEMS_PER_PAGE, groupedData.length)}개
