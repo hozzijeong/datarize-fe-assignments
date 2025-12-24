@@ -11,3 +11,11 @@ export interface CustomerParams {
 }
 
 export type Order = CustomerParams['sortBy']
+
+export interface Purchase {
+  date: string
+  quantity: number
+  product: string
+  price: number
+  imgSrc: string
+}
