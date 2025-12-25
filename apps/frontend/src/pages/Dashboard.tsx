@@ -3,10 +3,11 @@ import { PurchaseFrequencyChart } from '@/domains/purchase/components/PurchaseFr
 import { useFetchCustomers } from '@/domains/customers/queries/useFetchCustomers'
 import { CustomerList } from '@/domains/customers/components/CustomerList'
 import { useDebounce } from '@/hooks/useDebounce'
-import { Suspense, useCallback, useState } from 'react'
+import { Suspense, useCallback, useRef, useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 
 import { Order } from '@/domains/customers/types'
+import { QueryErrorResetBoundary } from '@tanstack/react-query'
 
 export function DashBoardPage() {
   return (
@@ -40,12 +41,14 @@ function PurchaseFrequencyChartBox() {
 function CustomerSection() {
   const [searchName, setSearchName] = useState('')
   const debouncedSearchName = useDebounce(searchName, 300)
+  const inputRef = useRef<HTMLInputElement | null>(null)
 
   return (
     <section>
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-2xl font-bold">고객 목록</h2>
         <input
+          ref={inputRef}
           type="text"
           placeholder="고객 이름 검색..."
           value={searchName}
@@ -53,11 +56,28 @@ function CustomerSection() {
           className="w-full max-w-xs rounded-md border border-gray-300 px-4 py-2 focus:border-brand-green-800 focus:outline-none"
         />
       </div>
-      <ErrorBoundary fallback={<div>고객 목록을 불러오는 중 오류가 발생했습니다.</div>}>
-        <Suspense fallback={<div className="py-8 text-center">로딩 중...</div>}>
-          <CustomerListBox searchName={debouncedSearchName} />
-        </Suspense>
-      </ErrorBoundary>
+      {/* NOTE: 검색 실패시 쿼리 초기화 및 검색창 focus 적용. 근데 이게 검색 실패에 대한 에러만 처리하는건가? 한번 생각해 볼 필요 있음 */}
+      <QueryErrorResetBoundary>
+        {({ reset }) => (
+          <ErrorBoundary
+            onReset={reset}
+            fallbackRender={(props) => (
+              <CustomerList.ErrorFallback
+                {...props}
+                resetErrorBoundary={(params) => {
+                  props.resetErrorBoundary({ ...params })
+                  inputRef.current?.focus()
+                  setSearchName('')
+                }}
+              />
+            )}
+          >
+            <Suspense fallback={<CustomerList.Fallback />}>
+              <CustomerListBox searchName={debouncedSearchName} />
+            </Suspense>
+          </ErrorBoundary>
+        )}
+      </QueryErrorResetBoundary>
     </section>
   )
 }

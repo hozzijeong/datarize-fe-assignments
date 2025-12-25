@@ -3,6 +3,8 @@ import { usePagination } from '@/hooks/usePagination'
 import { Pagination } from '@/components/Pagination'
 import type { Customer, Order } from '../types'
 import { OrderDirectionItem } from './OrderDirectionItem'
+import { CustomerListSkeleton } from './CustomerListSkeleton'
+import { CustomerListErrorFallback } from './CustomerListErrorFallback'
 
 const ITEMS_PER_PAGE = 10
 
@@ -13,10 +15,7 @@ interface CustomerListProps {
 }
 
 export function CustomerList({ data, order, handleChangeOrder }: CustomerListProps) {
-  const { currentPage, totalPages, startIndex, paginatedData, handlePageChange } = usePagination(
-    data,
-    ITEMS_PER_PAGE
-  )
+  const { currentPage, totalPages, startIndex, paginatedData, handlePageChange } = usePagination(data, ITEMS_PER_PAGE)
 
   return (
     <div>
@@ -72,3 +71,6 @@ export function CustomerList({ data, order, handleChangeOrder }: CustomerListPro
     </div>
   )
 }
+
+CustomerList.Fallback = CustomerListSkeleton
+CustomerList.ErrorFallback = CustomerListErrorFallback
