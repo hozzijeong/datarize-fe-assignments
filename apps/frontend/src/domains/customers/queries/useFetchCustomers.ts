@@ -1,5 +1,6 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import type { Customer, CustomerParams } from '../types'
+import { CustomerListError } from '../errors/CustomerListError'
 
 function buildUrl(params?: CustomerParams): string {
   const searchParams = new URLSearchParams()
@@ -15,7 +16,7 @@ async function fetchCustomers(params?: CustomerParams): Promise<Customer[]> {
   const response = await fetch(buildUrl(params))
 
   if (!response.ok) {
-    throw new Error('Failed to fetch customers')
+    throw new CustomerListError('Failed to fetch customers', response.status)
   }
 
   return response.json()

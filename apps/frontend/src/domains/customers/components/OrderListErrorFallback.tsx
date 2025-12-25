@@ -1,11 +1,8 @@
 import { type FallbackProps } from 'react-error-boundary'
+import { OrderListError } from '../errors/OrderListError'
 
-interface ApiError extends Error {
-  status?: number
-}
-
-function getErrorMessage(error: ApiError): string {
-  switch (error.status) {
+function getErrorMessage(status?: number): string {
+  switch (status) {
     case 400:
       return '잘못된 고객 ID입니다.'
     case 404:
@@ -18,10 +15,11 @@ function getErrorMessage(error: ApiError): string {
 }
 
 export function OrderListErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
-  const message = getErrorMessage(error as ApiError)
+  const orderError = error instanceof OrderListError ? error : null
+  const message = getErrorMessage(orderError?.status)
 
   return (
-    <div className="flex min-h-[500px] flex-col items-center justify-center">
+    <div className="flex min-h-125 flex-col items-center justify-center">
       <div className="text-center">
         <p className="mb-5 whitespace-pre-line text-lg font-semibold text-brand-black-1100">
           {message}
