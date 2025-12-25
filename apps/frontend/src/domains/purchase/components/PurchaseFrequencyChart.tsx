@@ -95,7 +95,7 @@ export function PurchaseFrequencyChart({ data }: PurchaseFrequencyChartProps) {
       },
       splitLine: {
         lineStyle: {
-          color: '#DBE2E8',
+          color: '#D6E3E2',
           type: 'dashed',
         },
       },
@@ -121,5 +121,5 @@ export function PurchaseFrequencyChart({ data }: PurchaseFrequencyChartProps) {
     ],
   }
 
-  return <ReactECharts option={option} style={{ height: '400px', width: '100%' }} />
+  return <ReactECharts option={option} style={{ height: '500px', width: '100%' }} />
 }
