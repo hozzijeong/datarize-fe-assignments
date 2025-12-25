@@ -2,6 +2,8 @@ import { useMemo } from 'react'
 import { usePagination } from '@/hooks/usePagination'
 import { Pagination } from '@/components/Pagination'
 import type { Purchase } from '../types'
+import { OrderListSkeleton } from './OrderListSkeleton'
+import { OrderListErrorFallback } from './OrderListErrorFallback'
 
 const ITEMS_PER_PAGE = 5
 
@@ -80,3 +82,6 @@ export function OrderList({ data }: OrderListProps) {
     </div>
   )
 }
+
+OrderList.Fallback = OrderListSkeleton
+OrderList.ErrorFallback = OrderListErrorFallback
