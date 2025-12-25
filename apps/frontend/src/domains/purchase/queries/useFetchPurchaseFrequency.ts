@@ -1,5 +1,6 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import type { PurchaseFrequency, PurchaseFrequencyParams } from '../types'
+import { PurchaseFrequencyError } from '../errors/PurchaseFrequencyError'
 
 function buildUrl(params?: PurchaseFrequencyParams): string {
   if (!params?.from || !params?.to) return '/api/purchase-frequency'
@@ -15,7 +16,12 @@ async function fetchPurchaseFrequency(params?: PurchaseFrequencyParams): Promise
   const response = await fetch(buildUrl(params))
 
   if (!response.ok) {
-    throw new Error('Failed to fetch purchase frequency')
+    const data = await response.json().catch(() => ({}))
+    throw new PurchaseFrequencyError(
+      'Failed to fetch purchase frequency',
+      response.status,
+      data.error
+    )
   }
 
   return response.json()
