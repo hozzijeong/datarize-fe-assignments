@@ -1,16 +1,16 @@
-import { useFetchPurchaseFrequency } from '@/domains/purchase/queries/useFetchPurchaseFrequency'
-import { PurchaseFrequencyChart } from '@/domains/purchase/components/PurchaseFrequencyChart'
-import { DateRangePicker, type DateRangePickerRef } from '@/domains/purchase/components/DateRangePicker'
-import { useFetchCustomers } from '@/domains/customers/queries/useFetchCustomers'
-import { CustomerList } from '@/domains/customers/components/CustomerList'
-import { SearchInput } from '@/domains/customers/components/SearchInput'
-import { useCustomerSearch } from '@/domains/customers/hooks/useCustomerSearch'
+import { useFetchPurchaseFrequency } from '@/domains/purchase-frequency/queries/useFetchPurchaseFrequency'
+import { PurchaseFrequencyChart } from '@/domains/purchase-frequency/components/PurchaseFrequencyChart'
+import { DateRangePicker, type DateRangePickerRef } from '@/domains/purchase-frequency/components/DateRangePicker'
+import { useFetchCustomers } from '@/domains/customer/customer-list/queries/useFetchCustomers'
+import { CustomerList } from '@/domains/customer/customer-list/components/CustomerList'
+import { SearchInput } from '@/domains/customer/customer-list/components/SearchInput'
+import { useCustomerSearch } from '@/domains/customer/customer-list/hooks/useCustomerSearch'
 import { Suspense, useCallback, useDeferredValue, useRef, useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { QueryErrorResetBoundary } from '@tanstack/react-query'
 
-import { Order } from '@/domains/customers/types'
-import type { PurchaseFrequencyParams } from '@/domains/purchase/types'
+import { Order } from '@/domains/customer/types'
+import type { PurchaseFrequencyParams } from '@/domains/purchase-frequency/types'
 
 export function DashBoardPage() {
   return (
@@ -76,12 +76,7 @@ function CustomerSection() {
     <section>
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-2xl font-bold">고객 목록</h2>
-        <SearchInput
-          ref={inputRef}
-          value={searchName}
-          placeholder="고객 이름 검색..."
-          onChange={handleSearchChange}
-        />
+        <SearchInput ref={inputRef} value={searchName} placeholder="고객 이름 검색..." onChange={handleSearchChange} />
       </div>
       <QueryErrorResetBoundary>
         {({ reset }) => (
