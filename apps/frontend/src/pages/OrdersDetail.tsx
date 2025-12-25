@@ -11,15 +11,15 @@ export function OrdersDetail() {
 
   if (!id) {
     return (
-      <main className="mx-auto max-w-7xl px-4 py-8">
-        <div className="text-center text-brand-black-700">잘못된 접근입니다.</div>
-      </main>
+      <>
+        <div className="mt-10 text-center text-brand-black-700">잘못된 접근입니다.</div>
+      </>
     )
   }
 
   return (
-    <main className="mx-auto max-w-7xl px-4 py-8">
-      <div className="mb-6 flex items-center gap-4">
+    <>
+      <div className="mt-10 mb-6 flex items-center gap-4">
         <Link
           to="/dashboard"
           className="flex items-center gap-1 rounded-md border border-brand-gray-300 px-3 py-1.5 text-sm text-brand-black-900 transition-colors hover:bg-brand-green-100"
@@ -38,7 +38,7 @@ export function OrdersDetail() {
           </ErrorBoundary>
         )}
       </QueryErrorResetBoundary>
-    </main>
+    </>
   )
 }
 

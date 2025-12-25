@@ -14,11 +14,11 @@ import type { PurchaseFrequencyParams } from '@/domains/purchase-frequency/types
 
 export function DashBoardPage() {
   return (
-    <main className="mx-auto max-w-7xl flex flex-col gap-15 px-4 py-8">
+    <>
       <PurchaseFrequencySection />
       <div className="w-full h-0.5 bg-gray-200 " />
       <CustomerSection />
-    </main>
+    </>
   )
 }
 
@@ -35,7 +35,7 @@ function PurchaseFrequencySection() {
   }
 
   return (
-    <section>
+    <section className="mt-10">
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-bold">가격대별 구매 빈도</h1>
         <DateRangePicker ref={dateRangePickerRef} onApply={handleApplyDate} onReset={handleReset} />

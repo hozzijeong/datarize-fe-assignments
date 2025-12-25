@@ -1,15 +1,24 @@
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import { DashBoardPage } from './pages/Dashboard'
 import { OrdersDetail } from './pages/OrdersDetail'
+import { MainLayout } from './layout/MainLayout'
 
 const router = createBrowserRouter([
   {
     path: '/dashboard',
-    element: <DashBoardPage />,
+    element: (
+      <MainLayout>
+        <DashBoardPage />
+      </MainLayout>
+    ),
   },
   {
     path: '/orders/:id',
-    element: <OrdersDetail />,
+    element: (
+      <MainLayout>
+        <OrdersDetail />
+      </MainLayout>
+    ),
   },
   {
     path: '*',
