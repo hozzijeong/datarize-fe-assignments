@@ -10,8 +10,9 @@ import { Order } from '@/domains/customers/types'
 
 export function DashBoardPage() {
   return (
-    <main className="mx-auto max-w-7xl px-4 py-8">
+    <main className="mx-auto max-w-7xl flex flex-col gap-15 px-4 py-8">
       <PurchaseFrequencySection />
+      <div className="w-full h-0.5 bg-gray-200 " />
       <CustomerSection />
     </main>
   )
@@ -19,7 +20,7 @@ export function DashBoardPage() {
 
 function PurchaseFrequencySection() {
   return (
-    <section className="mb-12">
+    <section>
       <h1 className="mb-6 text-2xl font-bold">가격대별 구매 빈도</h1>
       <ErrorBoundary fallback={<div>차트를 불러오는 중 오류가 발생했습니다.</div>}>
         <Suspense fallback={<div className="flex h-100 items-center justify-center">로딩 중...</div>}>

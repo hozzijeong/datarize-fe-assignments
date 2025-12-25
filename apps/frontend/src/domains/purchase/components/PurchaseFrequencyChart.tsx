@@ -75,6 +75,7 @@ export function PurchaseFrequencyChart({ data }: PurchaseFrequencyChartProps) {
     grid: {
       left: 16,
       right: 0,
+      bottom: 0,
       containLabel: true,
     },
     xAxis: {
