@@ -69,20 +69,24 @@ function PurchaseFrequencyChartBox({ params }: { params?: PurchaseFrequencyParam
 }
 
 function CustomerSection() {
-  const { searchName, submittedSearchName, handleSearchChange, handleSearch, resetSearch } = useCustomerSearch()
+  const { searchName, submittedSearchName, searchError, handleSearchChange, handleSearch, resetSearch } =
+    useCustomerSearch()
   const inputRef = useRef<HTMLInputElement>(null)
 
   return (
     <section>
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-6 flex items-center justify-between">
         <h2 className="text-2xl font-bold">고객 목록</h2>
-        <SearchInput
-          ref={inputRef}
-          value={searchName}
-          placeholder="고객 이름 검색..."
-          onChange={handleSearchChange}
-          onSearch={handleSearch}
-        />
+        <div className="relative">
+          <SearchInput
+            ref={inputRef}
+            value={searchName}
+            placeholder="고객 이름 검색..."
+            onChange={handleSearchChange}
+            onSearch={handleSearch}
+          />
+          {searchError && <span className="absolute -bottom-5 left-1 text-red-500 text-sm">{searchError}</span>}
+        </div>
       </div>
       <QueryErrorResetBoundary>
         {({ reset }) => (

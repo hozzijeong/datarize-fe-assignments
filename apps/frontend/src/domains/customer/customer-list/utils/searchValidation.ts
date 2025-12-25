@@ -1,5 +1,6 @@
 export const SEARCH_PATTERNS = {
   NUMBERS: /[0-9]/g,
+  HAS_NUMBERS: /[0-9]/,
   INCOMPLETE_KOREAN: /[ㄱ-ㅎㅏ-ㅣ]/,
 } as const
 
