@@ -17,11 +17,7 @@ async function fetchPurchaseFrequency(params?: PurchaseFrequencyParams): Promise
 
   if (!response.ok) {
     const data = await response.json().catch(() => ({}))
-    throw new PurchaseFrequencyError(
-      'Failed to fetch purchase frequency',
-      response.status,
-      data.error
-    )
+    throw new PurchaseFrequencyError('Failed to fetch purchase frequency', response.status, data.error)
   }
 
   return response.json()

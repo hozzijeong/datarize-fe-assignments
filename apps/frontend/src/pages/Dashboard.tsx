@@ -3,7 +3,7 @@ import { PurchaseFrequencyChart } from '@/domains/purchase/components/PurchaseFr
 import { useFetchCustomers } from '@/domains/customers/queries/useFetchCustomers'
 import { CustomerList } from '@/domains/customers/components/CustomerList'
 import { useDebounce } from '@/hooks/useDebounce'
-import { Suspense, useCallback, useRef, useState } from 'react'
+import { Suspense, useCallback, useDeferredValue, useRef, useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { QueryErrorResetBoundary } from '@tanstack/react-query'
 
@@ -137,7 +137,8 @@ function PurchaseFrequencySection() {
 }
 
 function PurchaseFrequencyChartBox({ params }: { params?: PurchaseFrequencyParams }) {
-  const { data } = useFetchPurchaseFrequency(params)
+  const deferredParams = useDeferredValue(params)
+  const { data } = useFetchPurchaseFrequency(deferredParams)
 
   return <PurchaseFrequencyChart data={data} />
 }
