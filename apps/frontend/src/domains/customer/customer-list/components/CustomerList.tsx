@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { usePagination } from '@/hooks/usePagination'
 import { Pagination } from '@/components/Pagination'
-import type { Customer, Order } from '../types'
+import type { Customer, Order } from '../../types'
 import { OrderDirectionItem } from './OrderDirectionItem'
 import { CustomerListSkeleton } from './CustomerListSkeleton'
 import { CustomerListErrorFallback } from './CustomerListErrorFallback'

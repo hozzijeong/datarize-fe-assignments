@@ -29,7 +29,7 @@ function SkeletonGroup() {
   )
 }
 
-export function OrderListSkeleton() {
+export function CustomerPurchaseListSkeleton() {
   return (
     <div>
       <div className="space-y-6">

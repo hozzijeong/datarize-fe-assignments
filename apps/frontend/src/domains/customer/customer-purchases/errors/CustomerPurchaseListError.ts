@@ -1,9 +1,9 @@
-export class OrderListError extends Error {
+export class CustomerPurchaseListError extends Error {
   status: number
 
   constructor(message: string, status: number) {
     super(message)
-    this.name = 'OrderListError'
+    this.name = 'CustomerPurchaseListError'
     this.status = status
   }
 }

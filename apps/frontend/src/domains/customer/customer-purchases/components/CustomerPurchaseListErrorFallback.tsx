@@ -1,5 +1,5 @@
 import { type FallbackProps } from 'react-error-boundary'
-import { OrderListError } from '../errors/OrderListError'
+import { CustomerPurchaseListError } from '../errors/CustomerPurchaseListError'
 
 function getErrorMessage(status?: number): string {
   switch (status) {
@@ -14,9 +14,9 @@ function getErrorMessage(status?: number): string {
   }
 }
 
-export function OrderListErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
-  const orderError = error instanceof OrderListError ? error : null
-  const message = getErrorMessage(orderError?.status)
+export function CustomerPurchaseListErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
+  const purchaseError = error instanceof CustomerPurchaseListError ? error : null
+  const message = getErrorMessage(purchaseError?.status)
 
   return (
     <div className="flex min-h-125 flex-col items-center justify-center">

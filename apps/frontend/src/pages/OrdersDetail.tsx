@@ -2,8 +2,8 @@ import { Suspense } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { ErrorBoundary } from 'react-error-boundary'
 import { QueryErrorResetBoundary } from '@tanstack/react-query'
-import { useFetchCustomerPurchases } from '@/domains/customers/queries/useFetchCustomerPurchases'
-import { OrderList } from '@/domains/customers/components/OrderList'
+import { useFetchCustomerPurchases } from '@/domains/customer/customer-purchases/queries/useFetchCustomerPurchases'
+import { CustomerPurchaseList } from '@/domains/customer/customer-purchases/components/CustomerPurchaseList'
 import { ChevronLeftIcon } from '@/assets/ChevronLeftIcon'
 
 export function OrdersDetail() {
@@ -31,9 +31,9 @@ export function OrdersDetail() {
       </div>
       <QueryErrorResetBoundary>
         {({ reset }) => (
-          <ErrorBoundary onReset={reset} FallbackComponent={OrderList.ErrorFallback}>
-            <Suspense fallback={<OrderList.Fallback />}>
-              <OrderListBox customerId={id} />
+          <ErrorBoundary onReset={reset} FallbackComponent={CustomerPurchaseList.ErrorFallback}>
+            <Suspense fallback={<CustomerPurchaseList.Fallback />}>
+              <CustomerPurchaseListBox customerId={id} />
             </Suspense>
           </ErrorBoundary>
         )}
@@ -42,8 +42,8 @@ export function OrdersDetail() {
   )
 }
 
-function OrderListBox({ customerId }: { customerId: string }) {
+function CustomerPurchaseListBox({ customerId }: { customerId: string }) {
   const { data } = useFetchCustomerPurchases(customerId)
 
-  return <OrderList data={data} />
+  return <CustomerPurchaseList data={data} />
 }

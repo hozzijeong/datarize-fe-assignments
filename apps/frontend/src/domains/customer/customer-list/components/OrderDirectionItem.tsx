@@ -1,5 +1,5 @@
-import { IconUpArrow } from '../assets/IconUpArrow'
-import type { Order } from '../types'
+import { IconUpArrow } from '../../assets/IconUpArrow'
+import type { Order } from '../../types'
 
 export function OrderDirectionItem({ order }: { order: Order }) {
   return (

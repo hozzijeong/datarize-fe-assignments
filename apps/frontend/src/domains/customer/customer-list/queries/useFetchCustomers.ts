@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
-import type { Customer, CustomerParams } from '../types'
+import type { Customer, CustomerParams } from '../../types'
 import { CustomerListError } from '../errors/CustomerListError'
 
 function buildUrl(params?: CustomerParams): string {

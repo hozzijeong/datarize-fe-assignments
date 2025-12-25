@@ -1,13 +1,13 @@
 import { useMemo } from 'react'
 import { usePagination } from '@/hooks/usePagination'
 import { Pagination } from '@/components/Pagination'
-import type { Purchase } from '../types'
-import { OrderListSkeleton } from './OrderListSkeleton'
-import { OrderListErrorFallback } from './OrderListErrorFallback'
+import type { Purchase } from '../../types'
+import { CustomerPurchaseListSkeleton } from './CustomerPurchaseListSkeleton'
+import { CustomerPurchaseListErrorFallback } from './CustomerPurchaseListErrorFallback'
 
 const ITEMS_PER_PAGE = 5
 
-interface OrderListProps {
+interface CustomerPurchaseListProps {
   data: Purchase[]
 }
 
@@ -31,7 +31,7 @@ function groupByDate(purchases: Purchase[]): GroupedPurchases[] {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 }
 
-export function OrderList({ data }: OrderListProps) {
+export function CustomerPurchaseList({ data }: CustomerPurchaseListProps) {
   const groupedData = useMemo(() => groupByDate(data), [data])
 
   const { currentPage, totalPages, startIndex, paginatedData, handlePageChange } = usePagination(
@@ -83,5 +83,5 @@ export function OrderList({ data }: OrderListProps) {
   )
 }
 
-OrderList.Fallback = OrderListSkeleton
-OrderList.ErrorFallback = OrderListErrorFallback
+CustomerPurchaseList.Fallback = CustomerPurchaseListSkeleton
+CustomerPurchaseList.ErrorFallback = CustomerPurchaseListErrorFallback
