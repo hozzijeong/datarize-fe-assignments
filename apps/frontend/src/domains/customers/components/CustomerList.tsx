@@ -22,7 +22,7 @@ export function CustomerList({ data, order, handleChangeOrder }: CustomerListPro
       <div className="overflow-x-auto">
         <table className="w-full border-collapse">
           <thead>
-            <tr className="border-b bg-gray-100">
+            <tr className="border-b border-brand-gray-300 text-brand-black-1000 bg-brand-gray-100">
               <th className="px-4 py-3 text-left text-sm font-semibold">ID</th>
               <th className="px-4 py-3 text-left text-sm font-semibold">이름</th>
               <th className="px-4 py-3 text-right text-sm font-semibold">구매 횟수</th>
@@ -36,7 +36,7 @@ export function CustomerList({ data, order, handleChangeOrder }: CustomerListPro
           </thead>
           <tbody>
             {paginatedData.map((customer) => (
-              <tr key={customer.id} className="border-b hover:bg-gray-50 active:bg-gray-200">
+              <tr key={customer.id} className="border-b border-brand-gray-200 hover:bg-brand-gray-100">
                 <td className="text-sm">
                   <Link to={`/orders/${customer.id}`} className="block px-4 py-3">
                     {customer.id}
@@ -65,7 +65,7 @@ export function CustomerList({ data, order, handleChangeOrder }: CustomerListPro
 
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
 
-      <div className="mt-2 text-center text-sm text-gray-500">
+      <div className="mt-2 text-center text-sm text-brand-black-700">
         총 {data.length}명 중 {startIndex + 1}-{Math.min(startIndex + ITEMS_PER_PAGE, data.length)}명 표시
       </div>
     </div>
