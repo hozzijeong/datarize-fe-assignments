@@ -50,7 +50,7 @@ function CustomerSection() {
           placeholder="고객 이름 검색..."
           value={searchName}
           onChange={(e) => setSearchName(e.target.value)}
-          className="w-full max-w-xs rounded border border-gray-300 px-4 py-2 focus:border-blue-500 focus:outline-none"
+          className="w-full max-w-xs rounded-md border border-gray-300 px-4 py-2 focus:border-brand-green-800 focus:outline-none"
         />
       </div>
       <ErrorBoundary fallback={<div>고객 목록을 불러오는 중 오류가 발생했습니다.</div>}>
