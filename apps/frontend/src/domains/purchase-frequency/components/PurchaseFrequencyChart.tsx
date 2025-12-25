@@ -65,10 +65,10 @@ export function PurchaseFrequencyChart({ data }: PurchaseFrequencyChartProps) {
           const data = param.data as { range: string; count: number }
 
           return `
-          <div class="w-32">
+          <div class="w-32 space-y-2">
             <h4>${param.seriesName}</h4>
             <div class="flex justify-between items-center">
-              <span class="mb-1 text-xs text-brand-black-900">${data.range}</span>
+              <span class="text-xs text-brand-black-900">${data.range}</span>
               <span class="text-sm font-semibold text-brand-black-1200">${data.count.toLocaleString()}회</span>
             </div>
           </div>
