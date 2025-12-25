@@ -1,3 +1,6 @@
+import { ChevronLeftIcon } from '@/assets/ChevronLeftIcon'
+import { ChevronRightIcon } from '@/assets/ChevronRightIcon'
+
 interface PaginationProps {
   currentPage: number
   totalPages: number
@@ -17,9 +20,7 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
         className="flex h-8 w-8 items-center justify-center rounded-md border border-brand-gray-300 text-brand-black-900 transition-colors hover:bg-brand-green-100 disabled:cursor-not-allowed disabled:opacity-40"
         aria-label="이전 페이지"
       >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M10 12L6 8L10 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+        <ChevronLeftIcon />
       </button>
       {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
         <button
@@ -40,9 +41,7 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
         className="flex h-8 w-8 items-center justify-center rounded-md border border-brand-gray-300 text-brand-black-900 transition-colors hover:bg-brand-green-100 disabled:cursor-not-allowed disabled:opacity-40"
         aria-label="다음 페이지"
       >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+        <ChevronRightIcon />
       </button>
     </div>
   )
