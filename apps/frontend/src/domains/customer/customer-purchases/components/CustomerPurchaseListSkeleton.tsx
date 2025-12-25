@@ -31,7 +31,7 @@ function SkeletonGroup() {
 
 export function CustomerPurchaseListSkeleton() {
   return (
-    <div>
+    <div className="animate-delayed-fade-in">
       <div className="space-y-6">
         {Array.from({ length: SKELETON_GROUPS }).map((_, index) => (
           <SkeletonGroup key={index} />
