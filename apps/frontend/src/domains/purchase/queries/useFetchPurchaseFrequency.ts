@@ -12,7 +12,7 @@ function buildUrl(params?: PurchaseFrequencyParams): string {
   return `/api/purchase-frequency?${searchParams.toString()}`
 }
 
-async function fetchPurchaseFrequency(params?: PurchaseFrequencyParams): Promise<PurchaseFrequency[]> {
+export async function fetchPurchaseFrequency(params?: PurchaseFrequencyParams): Promise<PurchaseFrequency[]> {
   const response = await fetch(buildUrl(params))
 
   if (!response.ok) {
