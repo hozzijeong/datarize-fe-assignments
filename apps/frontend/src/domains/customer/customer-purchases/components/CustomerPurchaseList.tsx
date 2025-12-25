@@ -65,7 +65,10 @@ export function CustomerPurchaseList({ data }: CustomerPurchaseListProps) {
                     <p className="font-medium text-brand-black-1100">{purchase.product}</p>
                     <p className="text-sm text-brand-black-700">수량: {purchase.quantity}개</p>
                   </div>
-                  <p className="font-semibold text-brand-green-1100">{purchase.price.toLocaleString()}원</p>
+                  <div>
+                    <p className="font-semibold text-brand-black-1100 text-base">총액</p>
+                    <p className="font-semibold text-brand-green-1100">{purchase.price.toLocaleString()}원</p>
+                  </div>
                 </li>
               ))}
             </ul>
