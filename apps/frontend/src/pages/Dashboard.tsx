@@ -104,21 +104,17 @@ function CustomerSection() {
 }
 
 function CustomerListBox({ searchName }: { searchName: string }) {
-  const deferredSearchName = useDeferredValue(searchName)
   const [order, setOrder] = useState<Order>()
 
   const handleChangeOrder = useCallback(() => {
     setOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))
   }, [])
 
-  const { data } = useFetchCustomers({ name: deferredSearchName, sortBy: order })
+  const deferredFetchParams = useDeferredValue({ name: searchName, sortBy: order })
+
+  const { data } = useFetchCustomers(deferredFetchParams)
 
   return (
-    <CustomerList
-      key={`list-${deferredSearchName}-${order}`}
-      data={data}
-      order={order}
-      handleChangeOrder={handleChangeOrder}
-    />
+    <CustomerList key={`list-${searchName}-${order}`} data={data} order={order} handleChangeOrder={handleChangeOrder} />
   )
 }
