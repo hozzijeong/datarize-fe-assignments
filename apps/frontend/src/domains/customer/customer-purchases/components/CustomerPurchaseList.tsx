@@ -41,7 +41,7 @@ export function CustomerPurchaseList({ data }: CustomerPurchaseListProps) {
 
   if (data.length === 0) {
     return (
-      <div className="flex items-center justify-center min-h-[500px] text-brand-black-700">
+      <div className="flex items-center justify-center min-h-125 text-brand-black-700">
         <span>주문 내역이 없습니다.</span>
       </div>
     )

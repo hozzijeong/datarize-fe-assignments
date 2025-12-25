@@ -18,7 +18,7 @@ export function CustomerList({ data, order, handleChangeOrder }: CustomerListPro
   const { currentPage, totalPages, startIndex, paginatedData, handlePageChange } = usePagination(data, ITEMS_PER_PAGE)
 
   return (
-    <div className="h-[600px]">
+    <div className="h-150">
       <div className="overflow-x-auto">
         <table className="w-full border-collapse">
           <thead>

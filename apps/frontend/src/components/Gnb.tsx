@@ -4,8 +4,8 @@ import DataRiseLogo from '../assets/datarize_logo.svg'
 export function Gnb() {
   return (
     <header className="fixed w-full z-50 bg-white h-20 border-b-2 border-gray-100">
-      <div className="max-w-[1440px] w-full mx-auto flex items-center h-full">
-        <Link to={'/dashboard'} className="h-[37px]">
+      <div className="max-w-360 w-full mx-auto flex items-center h-full">
+        <Link to={'/dashboard'} className="h-9.25">
           <img src={DataRiseLogo} height={37} />
         </Link>
         <nav className="ml-7">
