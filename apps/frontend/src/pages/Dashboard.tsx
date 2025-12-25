@@ -143,12 +143,24 @@ function PurchaseFrequencyChartBox({ params }: { params?: PurchaseFrequencyParam
   return <PurchaseFrequencyChart data={data} />
 }
 
+function isCompleteKoreanOrEnglish(str: string): boolean {
+  if (!str) return true
+  const hasIncompleteKorean = /[ㄱ-ㅎㅏ-ㅣ]/.test(str)
+  return !hasIncompleteKorean
+}
+
 function CustomerSection() {
   const [searchName, setSearchName] = useState('')
   const debouncedSearchName = useDebounce(searchName, 300)
   const inputRef = useRef<HTMLInputElement | null>(null)
 
-  // TODO: 검색시 숫자는 제외, 완성된 한글이 아닌 경우 제외 완성된 한글만 검색되거나 영어만 검색되도록 처리할 것. 영어 + 한글은 처리 안되도록 하기
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/[0-9]/g, '')
+    setSearchName(value)
+  }
+
+  const validSearchName = isCompleteKoreanOrEnglish(debouncedSearchName) ? debouncedSearchName : ''
+
   return (
     <section>
       <div className="mb-4 flex items-center justify-between">
@@ -158,7 +170,7 @@ function CustomerSection() {
           type="text"
           placeholder="고객 이름 검색..."
           value={searchName}
-          onChange={(e) => setSearchName(e.target.value)}
+          onChange={handleSearchChange}
           className="w-full max-w-xs rounded-md border border-gray-300 px-4 py-2 focus:border-brand-green-800 focus:outline-none"
         />
       </div>
@@ -179,7 +191,7 @@ function CustomerSection() {
             )}
           >
             <Suspense fallback={<CustomerList.Fallback />}>
-              <CustomerListBox searchName={debouncedSearchName} />
+              <CustomerListBox searchName={validSearchName} />
             </Suspense>
           </ErrorBoundary>
         )}
@@ -189,15 +201,21 @@ function CustomerSection() {
 }
 
 function CustomerListBox({ searchName }: { searchName: string }) {
+  const deferredSearchName = useDeferredValue(searchName)
   const [order, setOrder] = useState<Order>()
 
   const handleChangeOrder = useCallback(() => {
     setOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))
   }, [])
 
-  const { data } = useFetchCustomers({ name: searchName, sortBy: order })
+  const { data } = useFetchCustomers({ name: deferredSearchName, sortBy: order })
 
   return (
-    <CustomerList key={`list-${searchName}-${order}`} data={data} order={order} handleChangeOrder={handleChangeOrder} />
+    <CustomerList
+      key={`list-${deferredSearchName}-${order}`}
+      data={data}
+      order={order}
+      handleChangeOrder={handleChangeOrder}
+    />
   )
 }
