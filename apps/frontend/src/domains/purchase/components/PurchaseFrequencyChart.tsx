@@ -1,6 +1,8 @@
 import ReactECharts from 'echarts-for-react'
 import type { PurchaseFrequency } from '../types'
 import type { EChartsOption, TooltipComponentFormatterCallbackParams } from 'echarts'
+import { PurchaseFrequencyChartSkeleton } from './PurchaseFrequencyChartSkeleton'
+import { PurchaseFrequencyChartErrorFallback } from './PurchaseFrequencyChartErrorFallback'
 
 interface PurchaseFrequencyChartProps {
   data: PurchaseFrequency[]
@@ -124,3 +126,6 @@ export function PurchaseFrequencyChart({ data }: PurchaseFrequencyChartProps) {
 
   return <ReactECharts option={option} style={{ height: '500px', width: '100%' }} />
 }
+
+PurchaseFrequencyChart.Fallback = PurchaseFrequencyChartSkeleton
+PurchaseFrequencyChart.ErrorFallback = PurchaseFrequencyChartErrorFallback
